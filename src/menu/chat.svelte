@@ -130,6 +130,12 @@
         font-size: 15px;
         border: 1px solid rgba(255, 255, 255, 0.18);
         cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    button:hover
+    {
+        background-color: #5a5d60;
     }
 
 </style>

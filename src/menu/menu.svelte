@@ -2,6 +2,8 @@
     import type { PlayerState } from 'playroomkit';
     import PlayerList from './playerList.svelte';
     import Chat from './chat.svelte';
+    import ActionButtons from './actionButtons.svelte';
+    import SongSelect from './songSelect.svelte';
 
     export let players: PlayerState[] = [];
 
@@ -14,6 +16,13 @@
 
         <PlayerList bind:players={players} />
         <Chat />
+
+    </div>
+
+    <div class="rightHang">
+
+        <SongSelect />
+        <ActionButtons />
 
     </div>
 
@@ -31,6 +40,16 @@
     
         overflow: hidden;
     
+        display: flex;
+
+    }
+
+    .rightHang
+    {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
 
     .leftHang
@@ -38,7 +57,7 @@
         display: flex;
         height: 100vh;
         width: 20%;
-        min-width: 550px;
+        min-width: 540px;
         flex-direction: column;
         justify-content: space-between;
     }

@@ -11,7 +11,7 @@
 
 </script>
 
-<div class="main">
+<div class="main {isReady ? "ready" : ""}">
 
     <div class="background" style="background-image: url('{thisPlayer.getProfile().photo}');"></div>
 
@@ -32,6 +32,7 @@
         border-radius: 15px;
         position: relative;
         overflow: hidden;
+        transition: box-shadow 0.2s;
     }
 
     .foreground
@@ -54,6 +55,11 @@
         background-color: #424549;
         width: 100%;
         height: 100%;
+    }
+
+    .ready
+    {
+        box-shadow: 0px 0px 7px 1px rgba(102, 180, 102, 0.527);
     }
 
     p

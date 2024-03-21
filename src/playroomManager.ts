@@ -15,7 +15,7 @@ export async function init(roomCode: string, playerName: string)
     await insertCoin({
         roomCode: roomCode,
         skipLobby: true,
-        gameId: "JJu23yxlbfHHv3jC8Tkk",
+        gameId: "JJu23yxlbfHHv3jC8Tkk", // fuck.
         persistentMode: false
     });
 
@@ -47,6 +47,13 @@ export async function init(roomCode: string, playerName: string)
     myPlayer().setState("ready", false, true)
     myPlayer().setState("isSpectator", false, true)
     myPlayer().setState("wishesToBeSpectator", false, true)
+
+    // setup lobby states
+    if (isHost())
+    {
+        setState("gameState", "lobby")
+        setState("selectedMap", null)
+    }
 
 }
 
