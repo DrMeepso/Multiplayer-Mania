@@ -6,6 +6,7 @@
     import SongSelect from './songSelect.svelte';
 
     export let players: PlayerState[] = [];
+    export let isHosting = false;
 
 </script>
 
@@ -21,7 +22,7 @@
 
     <div class="rightHang">
 
-        <SongSelect />
+        <SongSelect bind:isHosting={isHosting} />
         <ActionButtons />
 
     </div>

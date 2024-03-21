@@ -48,17 +48,23 @@ export async function init(roomCode: string, playerName: string)
     myPlayer().setState("isSpectator", false, true)
     myPlayer().setState("wishesToBeSpectator", false, true)
 
+
+    console.log(isHost())
     // setup lobby states
-    if (isHost())
-    {
-        console.log("I am the host")
-        eventEmitter.dispatchEvent(new CustomEvent("chat-server", { detail: { message: "Welcome, you are hosting the lobby!" } }));
-        setState("gameState", "lobby")
-        setState("selectedMap", null)
-    } else {
-        console.log("I am not the host")
-        eventEmitter.dispatchEvent(new CustomEvent("chat-server", { detail: { message: "Welcome to the lobby!" } }));
-    }
+    setTimeout(() => {
+        
+        if (isHost())
+        {
+            console.log("I am the host")
+            eventEmitter.dispatchEvent(new CustomEvent("chat-server", { detail: { message: "Welcome, you are hosting the lobby!" } }));
+            setState("gameState", "lobby")
+            setState("selectedMap", null)
+        } else {
+            console.log("I am not the host")
+            eventEmitter.dispatchEvent(new CustomEvent("chat-server", { detail: { message: "Welcome to the lobby!" } }));
+        }
+
+    }, 150);
 
 }
 

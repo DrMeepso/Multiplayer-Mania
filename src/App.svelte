@@ -11,6 +11,14 @@
     init("12", `Player${Math.round(Math.random()*100)}`);
 
     let players: PlayerState[] = [];
+    let isHosting = false;
+    setInterval(() => {
+        if (isHosting !== isHost())
+        {
+            isHosting = isHost();
+        }
+    }, 100);
+
 
     //@ts-ignore
     MPEvents.addEventListener(MPEventType.PlayerJoin, async (event: CustomEvent) => {
@@ -30,8 +38,7 @@
 
 <main>
 
-    <Menu bind:players={players} />
-
+    <Menu bind:players={players} bind:isHosting={isHosting} />
 
 </main>
 
