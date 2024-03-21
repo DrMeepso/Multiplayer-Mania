@@ -8,7 +8,7 @@
 
     // this is all setup here so we can have the svelte reactivity!
 
-    init("95739752978", `Player${Math.round(Math.random()*100)}`);
+    init("12", `Player${Math.round(Math.random()*100)}`);
 
     let players: PlayerState[] = [];
 

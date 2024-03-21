@@ -23,6 +23,13 @@
         return 'ok';
     });
 
+    //@ts-ignore
+    MPEvent.addEventListener("chat-server", (event: CustomEvent) => {
+        console.log(event.detail.message);
+        chat.push({ message: event.detail.message, sender: {} as PlayerState, fromServer: true });
+        chat = chat; // get the reactivity to work
+    });
+
     let message = ""
     let input: HTMLInputElement;
 

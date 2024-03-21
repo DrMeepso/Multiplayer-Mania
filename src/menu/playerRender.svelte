@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { PlayerState } from "playroomkit";
+    import { myPlayer, type PlayerState } from "playroomkit";
 
     export let thisPlayer: PlayerState;
 
@@ -16,7 +16,7 @@
     <div class="background" style="background-image: url('{thisPlayer.getProfile().photo}');"></div>
 
     <div class="foreground">
-        {thisPlayer.getProfile().name}
+        {thisPlayer.getProfile().name + (thisPlayer.id === myPlayer().id ? " (You)" : "")}
         <p>{isReady ? "Ready" : "Unready"}</p>
     </div>
 

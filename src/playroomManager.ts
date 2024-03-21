@@ -51,8 +51,13 @@ export async function init(roomCode: string, playerName: string)
     // setup lobby states
     if (isHost())
     {
+        console.log("I am the host")
+        eventEmitter.dispatchEvent(new CustomEvent("chat-server", { detail: { message: "Welcome, you are hosting the lobby!" } }));
         setState("gameState", "lobby")
         setState("selectedMap", null)
+    } else {
+        console.log("I am not the host")
+        eventEmitter.dispatchEvent(new CustomEvent("chat-server", { detail: { message: "Welcome to the lobby!" } }));
     }
 
 }
