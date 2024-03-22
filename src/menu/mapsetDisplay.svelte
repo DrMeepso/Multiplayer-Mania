@@ -2,8 +2,8 @@
 
     import { type MapSet } from "./types";
 
+    export let infoONLY = false;
     export let thisMap: MapSet;
-    console.log(thisMap);
 
     function r(num: number | undefined)
     {
@@ -14,21 +14,59 @@
         return Math.round(num*100)/100;
     }
 
+    export let globalSelectedMap: MapSet;
+    export let openMenu: (map: MapSet) => void = () => {};
+
+    export let isSelected = false;
+
+    $:{
+        onChangeSelectedMap(globalSelectedMap)
+    }
+
+    function onChangeSelectedMap(map: MapSet)
+    {
+        if (map.id === thisMap.id)
+        {
+            isSelected = true;
+        }
+        else
+        {
+            isSelected = false;
+        }
+    }
+
+    function onClick()
+    {
+        console.log("click");
+
+        if (globalSelectedMap.id === thisMap.id)
+        {
+            openMenu(thisMap);
+            return;
+        }
+
+        globalSelectedMap = thisMap;
+    }
+
 </script>
 
-<div class="mapSet">
+
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div class="mapSet" on:click={onClick} style="{isSelected ? "margin-left: 5px;" : ""}">
 
     <div class="mapBackground" style="background-image: url('https://cdn.quavergame.com/mapsets/{thisMap.id}.jpg');"></div>
 
-    <div class="mapInfo">
+    <div class="mapInfo" style="{infoONLY ? "justify-content: center;" : ""}">
         <div>
             <h3>{thisMap.artist} - {thisMap.title}</h3>
             <p>Mapped by {thisMap.creator_username}</p>
         </div>
-        <div class="h">
-            <p class="mapDif">Rating: {r(thisMap.difficulty_range[0])} - {r(thisMap.difficulty_range.at(-1))}, {thisMap.difficulty_range.length} Map{thisMap.difficulty_range.length > 1 ? "s" : ""}</p>
-            <button>Select</button>
-        </div>
+        {#if !infoONLY}
+            <div class="h">
+                <p class="mapDif">Rating: {r(thisMap.difficulty_range[0])} - {r(thisMap.difficulty_range.at(-1))}, {thisMap.difficulty_range.length} Map{thisMap.difficulty_range.length > 1 ? "s" : ""}</p>
+            </div>
+        {/if}
     </div>
 
 </div>
@@ -68,7 +106,7 @@
 
     .mapSet
     {
-        width: 100%;
+        width: auto;
         height: 100px;
         border-radius: 15px;
 
@@ -76,6 +114,9 @@
 
         position: relative;
         overflow: hidden;
+        margin: 8px;
+        margin-left: 40px;
+        transition: margin-left 0.2s;
     }
 
     .mapBackground
@@ -83,7 +124,7 @@
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-        filter: blur(2px) brightness(0.5);
+        filter: blur(5px) brightness(0.5);
         background-color: #424549;
         width: 100%;
         height: 100%;

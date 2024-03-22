@@ -4,6 +4,9 @@
 
     import { type MapSet } from "./types";
     import MapSetDisplay from "./mapsetDisplay.svelte"
+    import MapSelect from "./setDownloader.svelte";
+
+    import { RPC } from "playroomkit";
 
     const quaverAPIUrl = "https://api.quavergame.com/v1"
     let searchValue = ""
@@ -28,9 +31,38 @@
 
     getFirstPage()
 
+    let isMapSelectVisable = false;
+    let currentlySelectedMap: MapSet = {} as MapSet;
+
+    let currentDownloadProgress = 0;
+
+    async function openMenu(map: MapSet)
+    {
+        isMapSelectVisable = true;
+        await RPC.call("chat-server", `Map selected: ${map.artist} - ${map.title}`)
+    
+        // start downloading the map
+        let dl = fetch(`${quaverAPIUrl}/d/web/map/${map.id}`)
+
+    }
+
+    let curretAudioOut = new Audio();
+
+    $: selectedChanged(currentlySelectedMap);
+
+    function selectedChanged(map: MapSet)
+    {
+        currentlySelectedMap = map;
+        curretAudioOut.src = `https://cdn.quavergame.com/audio-previews/${map.id}.mp3`;
+        curretAudioOut.volume = 0.25;
+        curretAudioOut.play();
+    }
+
 </script>
 
 <div class="window">
+
+    <MapSelect bind:isVisable={isMapSelectVisable} bind:ThisMap={currentlySelectedMap} bind:currentDownloadProgress={currentDownloadProgress} />
 
     {#if isHosting}
         <h3>Song Select</h3>
@@ -48,7 +80,7 @@
                 {/if}
             {/if}
             {#each visableMaps as map}
-                <MapSetDisplay thisMap={map} />
+                <MapSetDisplay thisMap={map} bind:globalSelectedMap={currentlySelectedMap} {openMenu} />
             {/each}
         </div>
 
@@ -60,9 +92,15 @@
 
 <style>
 
+    .window
+    {
+        overflow: hidden;
+    }
+
     div
     {
         height: calc(100% - 150px);
+        position: relative;
     }    
 
     .ToolBar
@@ -83,7 +121,6 @@
         border-radius: 10px;
         margin-top: 10px;
 
-        padding: 10px;
     }
     
     input

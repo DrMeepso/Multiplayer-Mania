@@ -4,21 +4,16 @@
     import Chat from './chat.svelte';
     import ActionButtons from './actionButtons.svelte';
     import SongSelect from './songSelect.svelte';
-    import MapSelect from './mapSelect.svelte';
+    import MapSelect from './setDownloader.svelte';
     import type { MapSet } from './types';
 
     export let players: PlayerState[] = [];
     export let isHosting = false;
 
-    let currentlySelectedMap: MapSet = {} as MapSet;
-    let isMapSelectVisable = true;
-
 </script>
 
 
 <main>
-
-    <MapSelect bind:isVisable={isMapSelectVisable} bind:ThisMap={currentlySelectedMap} />
 
     <div class="leftHang">
 
