@@ -73,13 +73,16 @@
     .window
     {
         width: 500px;
-        height: 400px;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        flex-grow: .5;
     }
 
     .chat
     {
-        height: 260px;
+        height: 100%;
+        flex-grow: inherit;
         overflow-y: scroll;
         border: 1px solid rgba(255, 255, 255, 0.18);
         border-radius: 10px;

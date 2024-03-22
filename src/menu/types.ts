@@ -1,41 +1,29 @@
-export interface Beatmap {
-    BeatmapId: number;
-    ParentSetId: number;
-    DiffName: string;
-    FileMD5: string;
-    Mode: number;
-    BPM: number;
-    AR: number;
-    OD: number;
-    CS: number;
-    HP: number;
-    TotalLength: number;
-    HitLength: number;
-    Playcount: number;
-    Passcount: number;
-    MaxCombo: number;
-    DifficultyRating: number;
-    OsuFile: string;
-    DownloadPath: string;
-}
-
-export interface BeatmapSet {
-    SetId: number;
-    ChildrenBeatmaps: Beatmap[];
-    RankedStatus: number;
-    ApprovedDate: string;
-    LastUpdate: string;
-    LastChecked: string;
-    Artist: string;
-    Artist_Unicode: string;
-    Title: string;
-    Title_Unicode: string;
-    Creator: string;
-    Source: string;
-    Tags: string;
-    HasVideo: boolean;
-    Genre: number;
-    Language: number;
-    Favourites: number;
-    Disabled: boolean;
-}
+export type MapSet = {
+    id: number;
+    creator_id: number;
+    creator_username: string;
+    artist: string;
+    title: string;
+    source: string;
+    tags: string;
+    description: string | null;
+    ranked_status: number;
+    date_submitted: string;
+    date_last_updated: string;
+    bpms: number[];
+    game_modes: number[];
+    difficulty_names: string[];
+    difficulty_range: number[];
+    min_length_seconds: number;
+    max_length_seconds: number;
+    min_ln_percent: number;
+    max_ln_percent: number;
+    min_play_count: number;
+    max_play_count: number;
+    min_date_submitted: string;
+    max_date_submitted: string;
+    min_date_last_updated: string;
+    max_date_last_updated: string;
+    min_combo: number;
+    max_combo: number;
+};

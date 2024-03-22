@@ -25,16 +25,18 @@
     .main
     {
         width: 300px;
-        height: 400px;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        flex-grow: .5;
     }
 
     .PlayerList
     {
-        height: 310px;
         overflow-y: scroll;
         border: 1px solid rgba(255, 255, 255, 0.18);
         border-radius: 10px;
+        height: 100%;
     }
 
     p

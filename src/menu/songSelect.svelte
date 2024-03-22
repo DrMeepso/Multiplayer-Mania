@@ -2,12 +2,31 @@
 
     export let isHosting: boolean;
 
-    import { type Beatmap, type BeatmapSet } from "./types";
+    import { type MapSet } from "./types";
+    import MapSetDisplay from "./mapsetDisplay.svelte"
 
-    const quaverAPIUrl = "https://api.chimu.moe"
+    const quaverAPIUrl = "https://api.quavergame.com/v1"
     let searchValue = ""
     
-    
+    let visableMaps: MapSet[] = []
+    let isLoading = false;
+
+    async function getSongs(page: number)
+    {
+        isLoading = true;
+        visableMaps = [];
+        let fetched = await fetch(`${quaverAPIUrl}/mapsets/maps/search?search=${searchValue}&page=${page}&mode=1`)
+        let maps: MapSet[] = (await fetched.json()).mapsets
+
+        isLoading = false;
+        visableMaps = maps
+    }
+
+    async function getFirstPage() {
+        await getSongs(0)
+    }
+
+    getFirstPage()
 
 </script>
 
@@ -18,10 +37,19 @@
 
         <div class="ToolBar">
             <input type="text" placeholder="Search for a song..." bind:value={searchValue} />
-            <button>Search</button>
+            <button on:click={getFirstPage}>Search</button>
         </div>
         <div class="songSelectHolder">
-
+            {#if isLoading}
+                <h3>Loading...</h3>
+            {:else}
+                {#if visableMaps.length == 0}
+                    <h3>No Maps Found</h3>
+                {/if}
+            {/if}
+            {#each visableMaps as map}
+                <MapSetDisplay thisMap={map} />
+            {/each}
         </div>
 
     {:else}
@@ -34,7 +62,7 @@
 
     div
     {
-        height: 100%;
+        height: calc(100% - 150px);
     }    
 
     .ToolBar
@@ -55,12 +83,7 @@
         border-radius: 10px;
         margin-top: 10px;
 
-        padding: 5px;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-start;
+        padding: 10px;
     }
     
     input
